@@ -1,33 +1,45 @@
-﻿using MovieBookingSystem.Data.Enums;
-using System.ComponentModel.DataAnnotations;
+﻿using Microsoft.EntityFrameworkCore;
+using MovieBookingSystem.Data.Enums;
+using MovieBookingSystem.Models;
 using System.ComponentModel.DataAnnotations.Schema;
+using System.ComponentModel.DataAnnotations;
 
-namespace MovieBookingSystem.Models
+public class Movie
 {
-    public class Movie
-    {
-        [Key]
-        public int Id { get; set; }
+    [Key]
+    public int Id { get; set; }
 
-        public string MovieName { get; set; }
-        public string MovieDescription { get; set; }
-        public double MoviePrice { get; set; }
-        public string MovieImageURL { get; set; }
-        public DateTime MovieStartDate { get; set; }
-        public DateTime MovieEndDate { get; set; }
-        public MovieCategory MovieCategory { get; set; }
+    [MaxLength(100)]
+    public string MovieName { get; set; }
 
-        //Relationships
-        public List<Actor_Movie> Actors_Movies { get; set; }
+    [MaxLength(500)]
+    public string MovieDescription { get; set; }
 
-        //Cinema
-        public int CinemaId { get; set; }
-        [ForeignKey("CinemaId")]
-        public Cinema Cinema { get; set; }
+    [Precision(18, 2)]
+    public double MoviePrice { get; set; }
 
-        //Producer
-        public int ProducerId { get; set; }
-        [ForeignKey("ProducerId")]
-        public Producer Producer { get; set; }
-    }
+    [MaxLength(1000)]
+    public string MovieImageURL { get; set; }
+
+    public DateTime MovieStartDate { get; set; }
+
+    public DateTime MovieEndDate { get; set; }
+
+    [MaxLength(100)]
+    public MovieCategory MovieCategory { get; set; }
+
+    // Relationships
+    public List<Actor_Movie> Actors_Movies { get; set; }
+
+    // Cinema Relationship
+    public int CinemaId { get; set; } // Foreign Key
+
+    [ForeignKey("CinemaId")]
+    public Cinema Cinema { get; set; } // Navigation Property
+
+    // Producer Relationship
+    public int ProducerId { get; set; } // Foreign Key
+
+    [ForeignKey("ProducerId")]
+    public Producer Producer { get; set; } // Navigation Property
 }
